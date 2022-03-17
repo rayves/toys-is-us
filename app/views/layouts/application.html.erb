@@ -13,7 +13,7 @@
 
 <body>
   <% flash.each do |key, value| %>
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <div class="alert alert-<%= select_alert_subclass(key) %> alert-dismissible fade show" role="alert">
     <%= value %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
