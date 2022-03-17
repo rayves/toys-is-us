@@ -71,4 +71,4 @@ end
 
 gem "bootstrap", "~> 5.1"
 
-gem "simple_form", "~> 5.1"
+# gem "simple_form", "~> 5.1"
