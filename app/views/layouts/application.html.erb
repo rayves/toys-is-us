@@ -12,12 +12,13 @@
 </head>
 
 <body>
-  <% if notice %>
-  <p class="alert alert-success"><%= notice %></p>
+  <% flash.each do |key, value| %>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <%= value %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
   <% end %>
-  <% if alert %>
-  <p class="alert alert-danger"><%= alert %></p>
-  <% end %>
+  <%= render "shared/navbar" %>
   <%= yield %>
 </body>
 
