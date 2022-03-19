@@ -9,6 +9,10 @@
                 <div class="card-body">
                     <h5><%= listing.title %></h5>
                     <p class="card-text text-secondary"><%= listing.description %></p>
+                    <div class="d-flex justify-content-between">
+                        <%= link_to "See more", listing_path(listing.id), class: "btn btn-outline-primary" %>
+                        <h5><%= format_price(listing.price) %></h5>
+                    </div>
                 </div>
             </div>
         </div>
