@@ -5,7 +5,11 @@
         <% @listings.each do |listing| %>
         <div class="col mb-4">
             <div class="card border-dark h-100">
+                <% if listing.picture.attached? %>
+                <%= image_tag listing.picture, class: "thumbnail card-img top", alt: listing.title %>
+                <% else %>
                 <%= image_tag "toy-car.jpg", class: "thumbnail card-img top", alt: "toy car" %>
+                <% end %>
                 <div class="card-body">
                     <h5><%= listing.title %></h5>
                     <p class="card-text text-secondary"><%= listing.description %></p>

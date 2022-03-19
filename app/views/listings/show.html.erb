@@ -1,7 +1,11 @@
 <section class="container d-flex flex-column flex-md-row px-2 my-2 my-md-2">
     <div class="content col-12 col-md-12 col-lg-8 p-0 pr-md-3">
         <div class="col-12 p-0 main-preview mb-4">
+            <% if @listing.picture.attached? %>
+            <%= image_tag @listing.picture, class: "thumbnail card-img top", alt: @listing.title %>
+            <% else %>
             <%= image_tag "toy-car.jpg", class: "thumbnail card-img top", alt: "toy car" %>
+            <% end %>
         </div>
     </div>
     <div class="sidebar col-lg-4 p-0 mx-2 d-md-block">
