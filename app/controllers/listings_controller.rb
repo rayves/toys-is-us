@@ -1,7 +1,8 @@
 class ListingsController < ApplicationController
   # before execution any action authenticate users except on the specified actions
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_listing, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show] #=> checks is there a user logged in, if not redirect to sign in page
+  before_action :set_listing, only: [:show, :edit, :update, :destroy] #=> set instance variable @listing so actions can access all listings variable
+  before_action :authorize_user, only: [:edit, :update, :destroy] #=> check if the listing's user id equals the current user id. If not flash alert and redirect.
   before_action :set_form_vars, only: [:new, :edit]
   def index
     @listings = Listing.all
@@ -46,6 +47,7 @@ class ListingsController < ApplicationController
 
   def destroy
       @listing.destroy
+      redirect_to listings_path, notice: "Listing Sucessfully Deleted"
   end
 
   private
@@ -53,6 +55,14 @@ class ListingsController < ApplicationController
   def listing_params
     params.require(:listing).permit(:title, :price, :category_id, :condition, :description, :picture)
   end
+
+  def authorize_user
+    if @listing.user_id != current_user.id
+      # flash[:alert] = "You don't have permission to do that"
+      redirect_to listing_path, alert: "You don't have permission to do that"
+    end
+  end
+  
 
   def set_listing
     @listing = Listing.find(params[:id])
