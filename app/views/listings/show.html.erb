@@ -1,0 +1,25 @@
+<section class="container d-flex flex-column flex-md-row px-2 my-2 my-md-2">
+    <div class="content col-12 col-md-12 col-lg-8 p-0 pr-md-3">
+        <div class="col-12 p-0 main-preview mb-4">
+            <% if @listing.picture.attached? %>
+            <%= image_tag @listing.picture, class: "thumbnail card-img top", alt: @listing.title %>
+            <% else %>
+            <%= image_tag "toy-car.jpg", class: "thumbnail card-img top", alt: "toy car" %>
+            <% end %>
+        </div>
+    </div>
+    <div class="sidebar col-lg-4 p-0 mx-2 d-md-block">
+        <h1 class="mb-sm-2 mb-md-5"><%= @listing.title %></h1>
+        <h4 class="text-muted">Condition: <%= format_condition(@listing.condition) %></h4>
+        <h5 class="text-muted">Condition: <%= format_price(@listing.price) %></h5>
+        <div class="container">
+            <% if current_user && current_user.id == @listing.user_id %>
+            <div class="d-flex justify-content-equally">
+                <%= link_to "Edit", edit_listing_path(@listing.id), class: "btn btn-warning me-2" %>
+                <%= button_to "Delete", {action: "destroy", id: @listing.id}, form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete, class: "btn btn-danger" %>
+            </div>
+            <% end %>
+        </div>
+    </div>
+
+</section>

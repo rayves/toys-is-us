@@ -1,0 +1,25 @@
+<h1 class="hero-title text-center">Listings</h1>
+
+<section class="container">
+    <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-4">
+        <% @listings.each do |listing| %>
+        <div class="col mb-4">
+            <div class="card border-dark h-100">
+                <% if listing.picture.attached? %>
+                <%= image_tag listing.picture, class: "thumbnail card-img top", alt: listing.title %>
+                <% else %>
+                <%= image_tag "toy-car.jpg", class: "thumbnail card-img top", alt: "toy car" %>
+                <% end %>
+                <div class="card-body">
+                    <h5><%= listing.title %></h5>
+                    <p class="card-text text-secondary"><%= listing.description %></p>
+                    <div class="d-flex justify-content-between">
+                        <%= link_to "See more", listing_path(listing.id), class: "btn btn-outline-primary" %>
+                        <h5><%= format_price(listing.price) %></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% end %>
+    </div>
+</section>
