@@ -10,8 +10,22 @@
     </div>
     <div class="sidebar col-lg-4 p-0 mx-2 d-md-block">
         <h1 class="mb-sm-2 mb-md-5"><%= @listing.title %></h1>
+
         <h4 class="text-muted">Condition: <%= format_condition(@listing.condition) %></h4>
+
         <h5 class="text-muted">Condition: <%= format_price(@listing.price) %></h5>
+
+        <p><%= @listing.description %></p>
+
+        <% if current_user && @listing.sold == false %>
+        <button class="btn btn-primary mb-3 pr-2" data-stripe="payment">Buy:
+            <%= format_price(@listing.price) %></button>
+        <% elsif @listing.sold %>
+        <button class="btn btn-secondary" disabled>SOLD</button>
+        <% else %>
+        <%= button_to "Login to buy", new_user_session_path, class: "btn btn-info" %>
+        <% end %>
+
         <div class="container">
             <% if current_user && current_user.id == @listing.user_id %>
             <div class="d-flex justify-content-equally">
@@ -23,3 +37,16 @@
     </div>
 
 </section>
+
+<%# when button is clicked -> redirect to the session that corresponds with the session id %>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    document
+        .querySelector("[data-stripe='payment']") // => find button
+        .addEventListener("click", () => {
+            const stripe = Stripe("<%= Rails.application.credentials.dig(:stripe, :public_key)%>");
+            stripe.redirectToCheckout({
+                sessionId: "<%= @session_id %>"
+            })
+        }) // listening for click event
+</script>
