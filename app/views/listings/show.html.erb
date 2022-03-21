@@ -13,7 +13,7 @@
         <h4 class="text-muted">Condition: <%= format_condition(@listing.condition) %></h4>
         <h5 class="text-muted">Condition: <%= format_price(@listing.price) %></h5>
         <div class="container">
-            <% if current_user.id && current_user.id == @listing.user_id %>
+            <% if current_user && current_user.id == @listing.user_id %>
             <div class="d-flex justify-content-equally">
                 <%= link_to "Edit", edit_listing_path(@listing.id), class: "btn btn-warning me-2" %>
                 <%= button_to "Delete", {action: "destroy", id: @listing.id}, form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete, class: "btn btn-danger" %>
