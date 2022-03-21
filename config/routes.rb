@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_scope :user do
     # Redirests signing out users back to sign-in
     get "users", to: "devise/sessions#new"
@@ -20,5 +19,8 @@ Rails.application.routes.draw do
   patch "/listings/:id", to: "listings#update"
   delete "/listings/:id", to: "listings#destroy", as: "delete_listing"
   get '/listings/:id/edit', to: "listings#edit", as: "edit_listing"
+
+  get "/payments/success/:id", to: "payments#success", as: "payments_success"
+  post "/payments/webhook", to: "payments#webhook"
 
 end
