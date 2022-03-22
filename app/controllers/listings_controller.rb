@@ -9,7 +9,33 @@ class ListingsController < ApplicationController
   end
 
   def show
+    #create session -> use Stripe gem -> use Checkout function -> use session function with Checkout function
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      customer_email: current_user && current_user.email, #=> requires user be logged in
+      line_items: [
+        {
+          name: @listing.title,
+          description: @listing.description,
+          amount: @listing.price,
+          currency: 'aud',
+          quantity: 1
+        }
+      ],
+      payment_intent_data: {
+        metadata: {
+          # this sends the below data to stripe and when data is retrieved, a row can be created in the database to track this. i.e. that the customer has made a payment and what they've bought.
+          user_id: current_user && current_user.id,
+          listing_id: @listing.id
+        }
+      },
+      # as there is a redirection to Stripe's website and then a redirection back after processing of payment. URLs can be added for re-direction.
+      success_url: "#{root_url}payments/success/#{@listing.id}",
+      cancel_url: root_url
+    )
 
+    # 'session' object has an id when created. So this can be saved by instance varaible for wider access.
+    @session_id = session.id
   end
 
   def new
