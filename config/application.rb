@@ -36,7 +36,7 @@ module ToysIsUs
 
     # add support for custom environments in heroku
     if ENV["PIPE_ENV"].present?
-      Rails.applicaiton.config.credentials.content_path = Rails.root.join("config/credentials/#{ENV["PIPE_ENV"]}.yml.enc")
+      Rails.application.config.credentials.content_path = Rails.root.join("config/credentials/#{ENV["PIPE_ENV"]}.yml.enc")
     end
 
   end
