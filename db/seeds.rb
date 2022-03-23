@@ -9,11 +9,17 @@
 categories = ["soft toy", "figurine", "board game", "remote controlled", "building blocks", "puzzle"]
 
 if Category.count == 0
-    
     categories.each do |c|
         Category.create(name: c)
         puts "created #{c} category"
     end
-    
-    
+end
+
+features = ["educational", "require batteries", "waterproof", "huggable", "interactive", "companion app", "vegan", "wifi"]
+
+if Feature.count == 0
+    features.each do |f| 
+        Category.create(name: f)
+        puts "created #{f} feature"
+    end
 end

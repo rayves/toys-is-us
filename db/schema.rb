@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_21_193849) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_22_132803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_193849) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "features", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "listings", force: :cascade do |t|
     t.string "title"
     t.integer "condition"
@@ -60,6 +66,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_193849) do
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_listings_on_category_id"
     t.index ["user_id"], name: "index_listings_on_user_id"
+  end
+
+  create_table "listings_features", force: :cascade do |t|
+    t.bigint "listing_id", null: false
+    t.bigint "feature_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feature_id"], name: "index_listings_features_on_feature_id"
+    t.index ["listing_id"], name: "index_listings_features_on_listing_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -91,6 +106,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_193849) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "listings", "categories"
   add_foreign_key "listings", "users"
+  add_foreign_key "listings_features", "features"
+  add_foreign_key "listings_features", "listings"
   add_foreign_key "orders", "listings"
   add_foreign_key "orders", "users", column: "buyer_id"
   add_foreign_key "orders", "users", column: "seller_id"
