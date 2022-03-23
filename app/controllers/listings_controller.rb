@@ -48,12 +48,13 @@ class ListingsController < ApplicationController
     # @listing = Listing.new(category_id: params[:category_id])
     # @listing = Listing.new(listing_params)
     # As user has many listings, create new listing by accessing the Current_users listings
+      # create listing associated with the current logged in user.
     @listing = current_user.listings.new(listing_params)
     if @listing.save
         redirect_to @listing, notice: "Listing successfully created"
     else
       set_form_vars
-      render "new", alert: "Something went wrong"
+      render "new", status: 422
     end
   end
 
@@ -67,7 +68,7 @@ class ListingsController < ApplicationController
         redirect_to @listing, notice: "Listing successfully updated"
     else
       set_form_vars
-      render "edit", alert: "Something went wrong"
+      render "edit", status: 422
     end
   end
 
