@@ -19,7 +19,7 @@ features = ["educational", "require batteries", "waterproof", "huggable", "inter
 
 if Feature.count == 0
     features.each do |f| 
-        Category.create(name: f)
+        Feature.create(name: f)
         puts "created #{f} feature"
     end
 end

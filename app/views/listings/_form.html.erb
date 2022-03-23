@@ -15,11 +15,32 @@
     <%= f.select :category_id, @categories.map {|c| [c.name.titleize, c.id]}, class: "form-select" %>
 </div>
 
-<h5 class="mb-3">Condition</h5>
+<h5 class="mb-3 me-2">Condition</h5>
 <% @conditions.each do |option| %>
 <%= f.label :condition, format_condition(option), class: "form-label me-1" %>
 <%= f.radio_button :condition, option, class: "me-2" %>
 <% end %>
+
+<h5 class="mb-3 me-2">Features</h5>
+<div class="form-check form-check-line mb-3 me-2">
+    <%= f.collection_check_boxes :feature_ids, @features, :id, :name do |b| %>
+    <%# 
+    collcetion of checkboxes for feature_ids, 
+    load in @features, 
+    select id, 
+    see feature name,
+    block do seperate out label and check box and apply style
+    |b| -> conventions for sub-form
+     %>
+
+    <%= b.label class: "form-check-label" %>
+    <%# style form label %>
+    <%= b.check_box class: "form-check-line mr-2" %>
+    <%# style form checkbox %>
+    <% end %>
+
+
+</div>
 
 <div class="form-group mb-3">
     <%= f.label :picture, class: "form-label" %>
